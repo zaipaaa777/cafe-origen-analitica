@@ -164,6 +164,13 @@ function normalizarCiudad(ciudad) {
 }
 
 
+// Obtener las ventas realizadas en una fecha específica
+function ventasDelDia(ventas, fecha) {
+
+    return ventas.filter(venta => venta.fecha === fecha);
+
+}
+
 
 // Exportar las funciones
 module.exports = {
@@ -178,6 +185,7 @@ module.exports = {
     ventasPorCiudadM,
     totalPorCiudad,
     unidadesPorProducto,
-    topProductosPorValor
+    topProductosPorValor,
+    ventasDelDia
 };
 

@@ -34,7 +34,7 @@ const unaVenta = [ventas[0]];
 const sinVentas = [];
 
 // Verificar total vendido
-console.log("\n--- TOTAL VENDIDO ---");
+console.log("\n TOTAL VENDIDO ");
 
 verificar(
     "Total completo",
@@ -55,7 +55,7 @@ verificar(
 );
 
 // Verificar unidades vendidas
-console.log("\n--- UNIDADES VENDIDAS ---");
+console.log("\n UNIDADES VENDIDAS ");
 
 verificar(
     "Unidades completas",
@@ -76,7 +76,7 @@ verificar(
 );
 
 // Verificar ventas por ciudad
-console.log("\n--- VENTAS POR CIUDAD ---");
+console.log("\n VENTAS POR CIUDAD ");
 
 const ciudades = ["Medellín", "Bogotá", "Cali", "Pereira"];
 
@@ -103,17 +103,17 @@ verificar(
 );
 
 // Mostrar agrupaciones por ciudad
-console.log("\n--- TOTAL POR CIUDAD ---");
+console.log("\n TOTAL POR CIUDAD ");
 
 console.table(totalPorCiudad(ventas));
 
 // Mostrar unidades por producto
-console.log("\n--- UNIDADES POR PRODUCTO ---");
+console.log("\n UNIDADES POR PRODUCTO ");
 
 console.table(unidadesPorProducto(ventas));
 
 // Mostrar los tres productos que más dinero generaron
-console.log("\n--- TOP 3 PRODUCTOS POR VALOR ---");
+console.log("\n TOP 3 PRODUCTOS POR VALOR ");
 
 console.table(topProductosPorValor(ventas, 3));
 

@@ -60,7 +60,11 @@ Caso Borde 5: Formatos dispares en Identificadores de Clientes
 - Problema detectado: El campo cliente presenta inconsistencias en su nomenclatura (mezcla de minúsculas y mayúsculas o variaciones como "c1" frente a "C01"), lo que duplicaría artificialmente las métricas si analizara compras por cliente individual.
 - Decisión tomada: Aplicar una transformación de normalización (convertir todo a mayúsculas y asegurar un estándar de prefijos) para unificar la identidad de cada cliente de forma confiable.
 
+
+
 MINIRETO 2 DIA 1 SEMANA 1 TRAYECTO 2
+
+
 
  Reto: Indicadores básicos de negocio
 
@@ -132,7 +136,11 @@ Para evitar errores cuando el arreglo esté vacío, decidí lo siguiente:
 
 En el caso de ventaMayor, utilizo null porque no existe ningún registro que pueda considerarse como la venta más grande.
 
+
+
 MINIRETO 3 DIA 1 SEMANA 1 TRAYECTO 2
+
+
 
  1. Plan de trabajo
 
@@ -197,3 +205,98 @@ Voy a crear un archivo llamado verificar.js para comparar los resultados de las 
 Si los resultados coinciden, el programa mostrará OK. Si son diferentes, mostrará DIFERENTE.
 
 También comprobaré que el arreglo original de ventas conserve su orden después de ejecutar las funciones.
+
+
+
+MINIRETO 4 DIA 1 SEMANA 1 TRAYECTO 2
+
+
+
+
+Registro de depuración
+
+ Error 1. Bogotá aparecía dos veces
+
+Síntoma:
+
+Al generar el reporte de ventas por ciudad, Bogotá podía aparecer en dos grupos diferentes debido a que algunos registros tenían espacios sobrantes o diferencias entre mayúsculas y minúsculas.
+
+Entrada que lo produce:
+
+En los datos encontré registros como:
+
+- "bogota"
+- "Bogotá"
+- "Bogotá "
+
+Hipótesis:
+
+Consideré que el problema se presentaba porque JavaScript interpreta estos textos como cadenas diferentes cuando se utilizan directamente como claves de un objeto.
+
+Prueba realizada:
+
+Revisé los nombres de las ciudades y comprobé que al utilizarlos directamente se podían crear diferentes grupos para una misma ciudad.
+
+Después probé la normalización con trim(), normalize() y toLowerCase().
+
+Causa:
+
+La causa era que los nombres de las ciudades no estaban estandarizados antes de realizar la agrupación.
+
+Corrección:
+
+Creé la función normalizarCiudad() para eliminar espacios sobrantes, diferencias entre mayúsculas y minúsculas y diferencias en las tildes.
+
+Después utilicé esta función en totalPorCiudad() y ventasPorCiudad().
+
+Como resultado, Bogotá quedó agrupada en un solo registro y el proyecto muestra exactamente cuatro ciudades.
+
+ Error 2. El ticket promedio devolvía NaN
+
+Síntoma:
+
+Cuando se consultaba una fecha sin ventas, el ticket promedio podía devolver NaN en lugar de cero.
+
+Entrada que lo produce:
+
+Un arreglo vacío de ventas:
+
+const ventasVacias = [];
+
+
+Hipótesis:
+
+Consideré que el error se producía porque el programa intentaba dividir el total vendido entre la cantidad de ventas, que en este caso era cero.
+
+Prueba realizada:
+
+Revisé el comportamiento de una división entre cero en JavaScript y comprobé que 0 / 0 devuelve NaN.
+
+Después ejecuté la función ticketPromedio() con un arreglo vacío y comprobé que devuelve cero.
+
+También probé el día 2026-09-07, que no tiene registros de ventas.
+
+Causa:
+
+El problema se originaba porque no se comprobaba si existían ventas válidas antes de realizar la división.
+
+Corrección:
+
+Agregué una condición en ticketPromedio() para verificar que el contador de ventas válidas fuera mayor que cero.
+
+Si no existen ventas válidas, la función devuelve cero sin realizar la división.
+
+También implementé una condición en mostrarResumenDia() para mostrar un mensaje cuando no existen ventas para la fecha consultada.
+
+ 5. Resultado de la depuración
+
+Después de realizar las correcciones comprobé lo siguiente:
+
+- Las ciudades aparecen agrupadas correctamente.
+- Bogotá no aparece duplicada.
+- Medellín tampoco aparece duplicada.
+- El ticket promedio devuelve cero cuando no existen ventas válidas.
+- Las consultas de fechas sin ventas muestran un mensaje claro.
+- El reporte no presenta valores NaN ni registros undefined.
+
+Con estas correcciones terminé la integración del motor de analítica Café Origen v0.1.
